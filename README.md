@@ -108,7 +108,9 @@ No PDF handy? Try `public/samples/the-water-cycle.pdf`.
 
 **Keys:** `W A S D` walk · drag to look · `E` use · `H` ask Hoot · `J` journal and concept map · `M` world map · `Esc` close.
 
-I tested it on Windows 11 with Chrome. Other recent desktop browsers with WebGL should work, but I haven't tested them.
+**On a Mac?** The same steps work in Terminal. See [docs/MAC.md](docs/MAC.md) for which Gemma to pick for your Mac and a few Mac tips.
+
+I tested it on Windows 11 with Chrome. Other recent desktop browsers with WebGL, and macOS, should work, but I haven't tested them.
 
 ## Safety and honesty
 

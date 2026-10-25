@@ -1,7 +1,8 @@
 import { chromium } from 'playwright-core';
+import { chromePath } from './chrome';
 // Ad-hoc screenshot helper: npx tsx scripts/shot.ts <url> <out.png> [w] [h] [waitMs]
 const [url, out, w = '1440', h = '900', wait = '6000'] = process.argv.slice(2);
-const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+const b = await chromium.launch({ executablePath: chromePath(), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const p = await b.newPage({ viewport: { width: +w, height: +h } });
 p.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('[console]', m.type(), m.text().slice(0, 300)); });
 p.on('pageerror', (e) => console.log('[pageerror]', e.message));

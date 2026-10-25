@@ -1,4 +1,5 @@
 import { chromium } from 'playwright-core';
+import { chromePath } from '../scripts/chrome';
 import { Blueprint, type World } from '../shared/blueprint';
 
 // Checks for the hosted (Render) configuration. Start the server like the container does, e.g.:
@@ -6,7 +7,7 @@ import { Blueprint, type World } from '../shared/blueprint';
 //   SLOTH_MAX_CONCEPTS=4 SLOTH_NUM_CTX=4096 SLOTH_RATE_LIMIT_PER_HOUR=1 npx tsx server/index.ts
 //   npx tsx e2e/hosted.ts http://127.0.0.1:8788
 const BASE = process.argv[2] ?? 'http://127.0.0.1:8788';
-const CHROME = process.env.CHROME_PATH ?? 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+const CHROME = chromePath();
 let failed = 0;
 const check = async (name: string, fn: () => Promise<string>) => {
   const t0 = Date.now();

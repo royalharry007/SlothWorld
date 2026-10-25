@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { chromium } from 'playwright-core';
+import { chromePath } from './chrome';
 // Visual tour of a saved AI world JSON (from scripts/try-generate.ts): npx tsx scripts/tour-ai.ts world.json outDir
 const [file, out = '.'] = process.argv.slice(2);
 const world = JSON.parse(readFileSync(file, 'utf8'));
-const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+const b = await chromium.launch({ executablePath: chromePath(), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
 p.on('pageerror', (e) => console.log('[pageerror]', e.message));
 await p.goto('http://localhost:5173');

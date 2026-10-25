@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import { chromium, type Page } from 'playwright-core';
+import { chromePath } from '../scripts/chrome';
 import { Blueprint, type World } from '../shared/blueprint';
 import { isWalkable, type WorldLayout } from '../shared/layout';
 import { gradientStep, mse, networkForward, neuronForward, SAMPLE_NETWORK } from '../shared/math';
@@ -13,7 +14,7 @@ const args = process.argv.slice(2);
 const BASE = args.find((a) => a.startsWith('http')) ?? 'http://localhost:5173';
 const SKIP_AI = args.includes('--skip-ai');
 const SHOTS = 'docs/screenshots';
-const CHROME = process.env.CHROME_PATH ?? 'C:/Program Files/Google/Chrome/Application/chrome.exe';
+const CHROME = chromePath();
 mkdirSync(SHOTS, { recursive: true });
 
 const results: { name: string; ok: boolean; detail?: string }[] = [];

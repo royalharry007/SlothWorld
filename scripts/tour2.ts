@@ -1,8 +1,9 @@
 import { chromium } from 'playwright-core';
+import { chromePath } from './chrome';
 // Visual tour of the interactive features (needs the app on :8787 and, for Pip/Hoot, a model):
 //   npx tsx scripts/tour2.ts <outDir>
 const out = process.argv[2] ?? '.';
-const b = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const b = await chromium.launch({ executablePath: chromePath(), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
 p.on('pageerror', (e) => console.log('[pageerror]', e.message));
 p.on('console', (m) => {

@@ -1,53 +1,84 @@
-# Recording the SlothWorld demo
+# Recording the SlothWorld demo on a MacBook
 
-**Target:** a 2½–3 minute video. Judges decide in the first 30 seconds whether to keep watching, so open with the problem and the world, not the setup.
+**Goal:** a calm 2½–3 minute video for the Best Use of Gemma entry. Judges decide in the first 30 seconds whether to keep watching, so open with the problem and the world, not the setup.
 
-## Before you record (10 minutes)
+## A. The day before: set up and rehearse (about 30 minutes)
 
-1. **Free memory.** Close Chrome tabs, games and other heavy apps; the model and the 3D world share 8 GB.
-2. **Warm the model** so nothing waits on a cold start:
+1. Install everything with [docs/MAC.md](MAC.md): Node.js, Ollama, Chrome, the SlothWorld code, and the model for your Mac.
+2. Run it once (`npm start`, then open http://127.0.0.1:8787 in Chrome) and **do the whole script below as a rehearsal**. It warms up the model, and you'll find out how long generation takes on your Mac.
+3. Put `public/samples/the-water-cycle.pdf` on the Desktop, ready to drag in.
+4. Open **Notes** with the two Pip texts (end of this file) ready to copy.
+
+## B. Right before recording (10 minutes)
+
+1. **Restart the Mac.** Then quit everything you don't need: Slack, other browsers, Photos, Xcode.
+2. **Turn on Do Not Disturb:** Control Centre → Focus → Do Not Disturb, so no notifications appear in the video.
+3. **Hide the Dock and clean the desktop:** System Settings → Desktop & Dock → *Automatically hide and show the Dock*.
+4. **Plug in the charger.** Macs slow down on battery under load.
+5. **Warm the model** in Terminal:
    ```bash
-   ollama run gemma4:e2b-it-qat "Say OK."
+   ollama run gemma4:e2b-it-qat "Say OK."      # or gemma3:1b
    ```
-3. **Start the production build:** `npm run build && npm start`, then open http://127.0.0.1:8787.
-4. **Use a fresh browser profile** (or a private window), so progress starts at 0 and no old worlds show.
-5. **Use a real browser with the GPU,** not a remote desktop. Full screen with F11, 1920×1080.
-6. **Pre-generate the PDF world once,** so the second generation during recording is the warm one (about 45–70 s).
-7. **Have these ready:**
-   - `public/samples/the-water-cycle.pdf` in a folder you can drag from;
-   - the explanation text for Pip, written below so you can type it smoothly.
+6. **Start SlothWorld** in the project folder:
+   ```bash
+   npm start
+   ```
+7. **Open Chrome in a private window** (`Cmd+Shift+N`) at http://127.0.0.1:8787, then go full screen with `Cmd+Ctrl+F`. A private window means progress starts at 0 and no old worlds show.
 
-**Tools:** OBS Studio (free) or Xbox Game Bar (`Win+G`). Record at 1080p60. Record your voice separately with a phone or headset, then lay it over the video; it sounds calmer and lets you redo lines.
+## C. Recording
 
-## Shot list
+- **Screen:** press `Cmd+Shift+5` → *Record Entire Screen* → **Options** → set *Microphone* to *None* (record your voice separately). The stop button appears in the menu bar.
+  - *Alternative:* OBS Studio (free) gives 1080p at 60 fps and more control.
+- **Voice:** record each line separately with the iPhone **Voice Memos** app or a headset, in a quiet room. Separate takes sound calmer, and you can redo a line without redoing the video.
+- **Mistakes:** redo just that shot. You'll cut the shots together.
 
-| # | Time | What to show | What to say (short) |
-|---|---|---|---|
-| 1 | 0:00–0:12 | The landing page, with the islands slowly orbiting | "Rereading a dense PDF feels like studying, but nothing sticks. SlothWorld turns it into a world you explore slowly, at your own pace." |
-| 2 | 0:12–0:20 | Click **Explore the sample world**; the camera glides down to the sloth | "This is a hand-made sample about how neural networks learn." |
-| 3 | 0:20–0:30 | Click **Walk me there**; the sloth crosses the bridge by itself | "No hurry. The sloth knows the way to your next challenge." |
-| 4 | 0:30–0:50 | **Neuron Machine:** drag w2 negative (the tube turns red), then push the output above 0.90 | "It's a real neuron. Every number is computed live." |
-| 5 | 0:50–1:15 | **Pip** (the small sloth with a "?"). Type the **partial** answer below, show Pip's question, then type the **full** answer; Pip says "I get it now!" | "Here's the core idea: you learn by teaching. Pip only knows the key sentences from the PDF, and asks about whatever you missed." |
-| 6 | 1:15–1:30 | Press **H** and ask Hoot "What does the bias do?". Show the green *Quote verified in the PDF* and click **Open page 1** | "Stuck? Professor Hoot answers only from your document, with the page." |
-| 7 | 1:30–1:40 | Fill in a **Word Bridge** and get "The bridge holds!" | "Real sentences from your PDF, key words missing." |
-| 8 | 1:40–2:15 | **Exit → Create a world from a PDF**, drop the water-cycle PDF and show the 5 stages. **Cut the wait in editing.** Then the new world opens with its *AI-generated · gemma4* badge | "Now my own PDF. Gemma, running on my laptop, maps the concepts and designs each island. Every quote is checked against the PDF." |
-| 9 | 2:15–2:30 | In the new world, open the journal (**J**): the concept map and the **validation report** | "Different document, different world. Anything the model got wrong is fixed or flagged, never hidden." |
-| 10 | 2:30–2:45 | The **Review Grove** with glowing lanterns | "What you solve comes back tomorrow, in three days, in a week. Slow and steady." |
-| 11 | 2:45–2:55 | The world map (**M**), with blooming islands | "Stop rereading. Start exploring." Then the logo and the repo URL. |
+## D. Shot list and voice-over script (about 2 min 50 s)
 
-### Text to type for Pip (shot 5)
+| # | On screen | Voice-over |
+|---|---|---|
+| 1 | The landing page. Don't touch anything; the islands drift. *(0:00–0:12)* | "You know that PDF you've reread four times and still can't explain? Studying it properly means a pile of chores: notes, flashcards, practice questions, revision. So most of us just reread." |
+| 2 | Move the mouse over the green dot under the buttons. *(0:12–0:20)* | "SlothWorld does the chores for you, using Gemma, Google's open model, running right here on my MacBook." |
+| 3 | Click **Explore the sample world**; the camera glides down. Click **Start exploring**. *(0:20–0:28)* | "This sample is hand-made, about how neural networks learn." |
+| 4 | Click **Walk me there**; the sloth crosses the bridge by itself. *(0:28–0:36)* | "Feeling lazy? The sloth walks you to your next challenge." |
+| 5 | At the Neuron Machine, press `E`. Drag **w2** below zero (the tube turns red), then raise **w1** and **w3** until *output* is above 0.90. Press `Esc`. *(0:36–0:55)* | "It's a real neuron. A negative weight holds the input back. Every number is calculated live." |
+| 6 | Walk to **Pip** (the small sloth with a "?" on a stump) and press `E`. Paste **Pip text 1** and click **Teach Pip**. *(0:55–1:05)* | "Here's the heart of it. You learn best by teaching, so meet Pip, who doesn't get it yet." |
+| 7 | Wait for Pip's answer. Point the mouse at *"1 of 3 key ideas"*, then at Pip's question. *(1:05–1:15)* | "Pip only knows the key sentences from the PDF. I got one idea across, so Pip asks about what I missed, without giving the answer away." |
+| 8 | Paste **Pip text 2**, click **Teach Pip**, and wait for *"I get it now!"* and the green box. *(1:15–1:25)* | "Explain it fully, and Pip gets it. So do I." |
+| 9 | Press `Esc`, then `H`. Type *What does the bias do?* and press Return. Point at **Quote verified in the PDF**, then click **Open page 1** (the sentence is highlighted). *(1:25–1:40)* | "Stuck? Professor Hoot answers only from my PDF, shows the exact sentence, and opens the page." |
+| 10 | Press `Esc`. At the **Word Bridge**, press `E`, click *amplifies*, then *suppresses*, then **Check words**. *(1:40–1:50)* | "Word Bridges are real sentences from the PDF with the key words missing." |
+| 11 | Click **Exit**, then **Create a world from a PDF**, and drag in *the-water-cycle.pdf* from the Desktop. Show the stages ticking. *(1:50–2:05; cut the waiting in editing)* | "Now any PDF. Gemma maps the key ideas, designs every island, and SlothWorld checks each quote against the document." |
+| 12 | The new world opens with the **AI-generated · gemma…** badge. Show the objectives, then click **Start exploring**. *(2:05–2:15)* | "A different document makes a different world, in the order you'd learn it. That took about a minute; making these notes and quizzes by hand would take me hours." |
+| 13 | Press `J`. Show the concept map, scroll down and open the **Validation report**. *(2:15–2:28)* | "Small models make mistakes, so SlothWorld checks them. Anything Gemma got wrong is fixed or flagged, never hidden." |
+| 14 | Press `Esc`. Walk to the **Review Grove** (the lantern tree on the start island) and press `E`. *(2:28–2:40)* | "What you solve comes back after ten minutes, then tomorrow, then next week. Slow and steady." |
+| 15 | Press `M` for the world map. Hold for 3 seconds, then end on a title card with the logo and **github.com/royalharry007/SlothWorld**. *(2:40–2:52)* | "Open model, on my own machine, no cloud, no cost. Stop rereading. Let the sloth do the chores." |
 
-- **Partial:** `A neuron takes its inputs, multiplies each by a weight and adds them up.`
-- **Full:** `There is also a bias added to the weighted sum. Positive weights amplify an input and negative weights suppress it, and the sigmoid turns big positive sums into outputs near 1 and big negative sums into outputs near 0.`
+> **Timing on 12:** if your Mac took longer than a minute, say the real time ("about two minutes") or show it in a caption. Never claim a time you didn't see.
 
-## Tips
+### Pip text 1 (shot 6)
 
-- **Move the camera slowly.** Drag gently and let the camera settle before talking about something.
-- **Keep the mouse still** while a panel is being read.
-- **Be honest about the wait.** If you cut the generation wait, say "this takes about a minute on my laptop" out loud or in a caption.
-- **Show one flagged item if a world has one** (an "approximate" or "not found" badge). It proves the honesty checks are real.
-- **Add a 3–5 second GIF to the DEV post** of shot 5 (teaching Pip). It's the most distinctive moment, and many readers won't play the video.
+```
+A neuron takes its inputs, multiplies each by a weight and adds them up.
+```
 
-## Optional: the public Render demo
+### Pip text 2 (shot 8)
 
-If you deploy to Render (`docs/DEPLOY_RENDER.md`), add a 10-second clip of the live URL loading the sample world. Mention that the online version uses the smaller Gemma 3 1B model on a CPU, so worlds take a few minutes there.
+```
+There is also a bias added to the weighted sum. Positive weights amplify an input and negative weights suppress it, and the sigmoid turns big positive sums into outputs near 1 and big negative sums into outputs near 0.
+```
+
+Pip and Hoot write fresh replies each time, so the exact words may differ from the script. Just keep the meaning of your line.
+
+## E. Editing (iMovie is free on every Mac)
+
+1. Import the screen clips and voice memos into a new iMovie project.
+2. Put the clips in shot order and drop each voice line under its shot.
+3. **Cut the generation wait** in shot 11 down to about 3 seconds, and add a caption with the real time ("≈ 1 minute on a MacBook").
+4. Add the title card at the end: **SlothWorld**, *Stop rereading. Start exploring.*, and the GitHub link.
+5. Export at 1080p: File → Share → File.
+6. Upload to **YouTube** (Unlisted is fine). DEV embeds YouTube with `{% embed https://youtu.be/... %}`.
+
+## F. For the DEV post
+
+- **GIF:** make a 5-second GIF of shots 7–8 (teaching Pip). It's the most memorable moment, and many readers won't play the video. On a Mac, record that part with `Cmd+Shift+5` and convert it with a free tool such as Gifski.
+- **Cover image:** `docs/screenshots/01-landing.png`.
+- **Images in the post:** `docs/screenshots/23-teach-pip.png` and `docs/screenshots/05-neuron-lab.png`.
