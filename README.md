@@ -2,204 +2,180 @@
 
 **Stop rereading. Start exploring.**
 
-SlothWorld turns a dense PDF into a small 3D world of islands you can walk around, experiment in and get quizzed by. A **local open-weight model (Gemma 4 E2B via Ollama)** reads the document and designs the world. Then every quote it cites is checked against the PDF before any island appears.
+A 3D web game that turns a dense PDF into small islands you walk around, experiment on, and teach your way through. It runs on your own computer, using an open model.
 
-![SlothWorld landing page](docs/screenshots/01-landing.png)
+Created by Harichand.
 
-> Hacktoberfest 2026 · Week 3 submission. Runs entirely on a laptop: no cloud APIs, no accounts, and your PDF never leaves your machine.
+![Teaching Pip: Pip gets 1 of 3 key ideas from a half-explanation, asks a nudging question, then understands after the full explanation](docs/screenshots/23-teach-pip.png)
 
----
+- **Explore.** Each key idea in your PDF becomes an island. Bridges lead from the basics to the ideas that build on them. A *Walk me there* button takes the sloth to your next challenge.
+- **Teach Pip.** On every island, Pip the baby sloth doesn't get the idea yet. You explain it in your own words. Pip checks which key sentences from your PDF came across, and asks one question about what you missed, without giving the answer away.
+- **Ask Professor Hoot.** Press `H` anywhere. Hoot answers only from your PDF and shows the exact sentence, with a link to the page. If your PDF doesn't cover it, Hoot says so.
+- **Practise.** Riddle Stones (quizzes), Scales of Truth (is this claim supported?), Sequence Steps (put a process in order) and Word Bridges (put the key words back into a real sentence from your PDF).
+- **Remember.** What you solve comes back in the Review Grove after 10 minutes, then 1, 3, 7 and 21 days. A miss starts that item over.
+- **Slow and steady.** No timers, no streaks, no penalty for a wrong answer. Your progress is saved, and islands bloom with flowers as you learn.
+- **Private.** Your PDF is read on your own computer. No account, no upload.
 
-## What you can do
+## Why it's built this way
 
-| | |
-|---|---|
-| **Explore the curated sample world** | *How Neural Networks Learn*: three islands with real, working math. Tune a neuron's weights and watch its output change, send a signal through a 3→4→2 network, and train a model by gradient descent down a loss valley. Works offline, with no model required. |
-| **Create a world from your own PDF** | Drop in lecture notes or a chapter. Gemma maps the key concepts and how they connect, then designs a quiz, a claim check and (when the text describes a process) a sequencing puzzle for each concept island. You can jump from any island to the exact PDF page that supports it. |
+Rereading, highlighting and summarising are rated among the *least* useful ways to study. Practice testing and spaced practice are rated the *most* useful ([Dunlosky et al., 2013](https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html)). Students also try harder when they teach someone, the "protégé effect" ([Chase et al., 2009](https://purl.stanford.edu/zm369yx3532)).
 
-![Neuron lab](docs/screenshots/05-neuron-lab.png)
+So SlothWorld doesn't summarise your PDF for you. It turns it into things to *do*: teach, answer, recall later.
 
-## Learn by doing, with a small cast
+## Partner technology: Gemma
 
-Each part is based on what learning research rates highly: practice testing and spaced practice are "high utility", while rereading and highlighting are "low" (Dunlosky et al., 2013).
+SlothWorld uses Google's **Gemma** open models, running locally through [Ollama](https://ollama.com). Gemma is used for a few narrow jobs. It never writes code or HTML, and plain code checks everything it says against your PDF before you see it.
 
-- **Pip the baby sloth (teach-back):** explain each concept to Pip in your own words. Gemma checks your explanation against key sentences taken word-for-word from your PDF, and Pip asks *one* curious question about what you missed, without giving it away. This is the "protégé effect": people try harder when they teach (Chase et al., 2009). Without a model, it becomes a self-check against those same sentences.
-- **Professor Hoot (questions answered from your PDF only):** press `H` anywhere. Hoot answers from the relevant pages and shows a quote that SlothWorld verifies against the PDF. If the PDF doesn't cover it, Hoot says so. Even without a model, Hoot shows the most relevant passages.
-- **Word Bridge:** put the key terms back into a real sentence from your PDF. This is built by code, not by the model, so it's always grounded.
-- **Review Grove (spaced recall):** solved challenges come back after 10 minutes, then 1, 3, 7 and 21 days; a miss restarts the ladder. Evidence appears *after* you answer, so you actually retrieve.
-- **Gentle guidance:** a *Next step* button walks the sloth across bridges to your next challenge, and islands bloom with flowers as you solve things.
+| Job | What Gemma does | What the code checks |
+|---|---|---|
+| **Map the concepts** | Reads the page-marked text and picks 4–6 key ideas, with explanations, prerequisites, how they connect, learning objectives, and what the PDF leaves unclear. Each idea comes with a page number and a quote. | Every quote is searched for in the PDF's actual text. Page numbers are corrected; quotes that aren't found are flagged in red. |
+| **Design each island** | Writes a quiz, a true-or-false claim, and a sequence (only if the text describes one). | Bad options are repaired or dropped. **Answer keys are checked**: a quiz is dropped if another option matches the cited passage, or Gemma's own explanation, better than the keyed answer. |
+| **Be Pip** | Judges which key ideas your explanation conveys, and asks one Socratic question. | Pip's key ideas are sentences copied from your PDF. An idea only counts if your explanation shares real vocabulary with it, so Pip can't be flattered by an off-topic answer. |
+| **Be Hoot** | Answers your question from the relevant pages, with a quote. | The quote is verified against the PDF; a made-up one is labelled "could not be found". |
 
-## Quick start
+The Word Bridges and the Review Grove are built by code from verified sentences, with no model involved.
 
-**Requirements:** Node.js 20+ (tested on 24.13), and for PDF worlds [Ollama](https://ollama.com) with the Gemma model.
+**Two Gemma models, each where it fits:**
+
+| | Model | Runs on | A 3–4 page PDF takes |
+|---|---|---|---|
+| Your own computer (default) | **Gemma 4 E2B** (`gemma4:e2b-it-qat`, 4.6B, ~4.3 GB) | A laptop GPU (tested on a 6 GB GTX 1660 Ti) | ~45–110 s, 5 islands |
+| The public demo on Render | **Gemma 3 1B** (`gemma3:1b`, ~815 MB) | 2 CPU cores, no GPU | ~3–6 min, 4 islands |
+
+**What testing showed:** on CPU, Gemma 3 1B marked the wrong answer as correct on 5 of its 6 quizzes for one PDF. The answer-key check caught all 5. Run against earlier Gemma 4 output, it kept all 10 correct quizzes.
+
+Everything the model writes is labelled as the model's in the app. Quotes show whether they were *verified*, had their *page corrected*, are only the *closest matching passage*, or were *not found*.
+
+## 1. Install
+
+You need **Node.js 20 or newer** ([nodejs.org](https://nodejs.org)) and **Git**.
 
 ```bash
+git clone https://github.com/royalharry007/SlothWorld.git
+cd SlothWorld
 npm install
-npm run dev            # API on 127.0.0.1:8787 + app on http://localhost:5173
-```
-
-Open http://localhost:5173 and click **Explore the sample world**. This needs nothing else.
-
-To enable **PDF → world** generation:
-
-```bash
-ollama pull gemma4:e2b-it-qat     # ~4.3 GB, one time
-# Ollama must be running (it starts automatically on most installs)
-```
-
-The landing page shows a live status dot. It is green when the model is ready, and it tells you exactly what's missing when it isn't.
-
-**Public deployment on Render** (Docker, `gemma3:1b` on CPU, rate-limited): see [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md).
-
-Production build (one process serves the app and the API):
-
-```bash
 npm run build
-npm start                         # http://127.0.0.1:8787
+npm start
 ```
 
-Configuration (environment variables, all optional):
+Open **http://127.0.0.1:8787**. The sample world works right away, with no model needed.
 
-| Variable | Default | Purpose |
-|---|---|---|
-| `SLOTH_MODEL` | `gemma4:e2b-it-qat` | Any Ollama model that supports structured JSON output |
-| `OLLAMA_URL` | `http://127.0.0.1:11434` | Where Ollama listens |
-| `SLOTH_CALL_TIMEOUT_MS` | `240000` | Per-model-call timeout |
-| `PORT` / `HOST` | `8787` / `127.0.0.1` | API server (local-only by default) |
-| `SLOTH_HOSTED` | off | `1` = deployed for others: hosted privacy wording, trust proxy IPs |
-| `SLOTH_RATE_LIMIT_PER_HOUR` | `0` | New worlds per visitor per hour (0 = unlimited) |
-| `SLOTH_MAX_CONCEPTS` | `6` | Islands per world (2–6) |
-| `SLOTH_NUM_THREAD` / `SLOTH_NUM_GPU` / `SLOTH_NUM_CTX` | Ollama defaults / – / `8192` | CPU threads, `0` = CPU only, context size |
-
-### What runs where
-
-| Part | Runs | Needs |
-|---|---|---|
-| 3D world, sample world, labs, quizzes, progress | In your browser | Nothing beyond the app |
-| PDF text extraction (pdf.js) | Local Node server, in memory | Nothing extra |
-| Concept mapping and island design | Local Ollama | `gemma4:e2b-it-qat` pulled (~4.3 GB, ~3.5 GB VRAM/RAM) |
-| Saved worlds and progress | Browser `localStorage` | Nothing |
-
-## How it works
-
-```mermaid
-flowchart LR
-  PDF[PDF upload] --> X[pdf.js text extraction<br/>per page, in memory]
-  X -->|page-marked text| O[Gemma 4 E2B<br/>concept map<br/>JSON-schema constrained]
-  O -->|per concept + relevant pages| D[Gemma 4 E2B<br/>island design<br/>quiz · claim · sequence]
-  D --> V[Repair + validate<br/>Zod schema]
-  O --> V
-  X -->|page text| G[Grounding check<br/>every quote vs. extracted text]
-  G --> V
-  V --> L[Deterministic layout<br/>prerequisites first]
-  L --> R[3D renderer<br/>fixed component set]
-```
-
-```
- browser (React + React Three Fiber)          local server (Node + Express)         Ollama
- ┌─────────────────────────────────┐  PDF   ┌──────────────────────────────┐  JSON  ┌────────────┐
- │ Landing · Upload · 3D world     │ ─────▶ │ pdf.js extraction            │ ─────▶ │ gemma4:e2b │
- │ HUD · Journal · Labs · Panels   │ ◀───── │ prompts · repair · grounding │ ◀───── │  (local)   │
- │ localStorage (worlds, progress) │ NDJSON │ Zod validation · layout      │        └────────────┘
- └─────────────────────────────────┘ stages └──────────────────────────────┘
-```
-
-### The PDF-to-world pipeline
-
-1. **Extract.** pdf.js reads the PDF in memory (no temp files) and keeps page numbers. Limits: 15 MB, first 60 pages. Encrypted, empty and scanned PDFs get specific, actionable errors. There is no OCR, and the app says so.
-2. **Map the concepts** (model call 1). Page-marked text is fitted into a ~14k-character digest that samples every page. Gemma returns 4–6 concepts with explanations, a cited page and a verbatim quote, prerequisites, typed relationships, learning objectives and *uncertainties* (what the document leaves unclear). The output is constrained with Ollama's JSON-schema `format`.
-3. **Design the islands** (one model call per concept). Each call gets only the pages relevant to that concept and returns an island title, purpose, objective, biome, a multiple-choice quiz, a claim to judge (alternating true and false), and an ordered sequence *only if the text describes one*. It also returns any explanation that goes **beyond the source**.
-4. **Repair and validate.** The model output is treated as untrusted. Markup is stripped, duplicate or out-of-range quiz options are repaired or dropped, step labels are cleaned, unknown relationship targets are discarded, and "false" claims that appear word-for-word in the PDF are dropped. **Answer keys are checked:** a quiz is dropped if a different option matches the cited PDF passage, or the model's own explanation, better than the keyed answer. Islands whose design failed fall back to a question built only from already-validated concept summaries. The result must pass a strict Zod schema, or it isn't rendered.
-5. **Ground every citation.** Each quote is searched for in the extracted text and labelled **verified**, **relocated** (page number corrected), **approximate** (closest matching sentence linked and marked as such) or **unverified** (flagged in red). The passage shown to learners always comes from the extraction, never from the model.
-6. **Lay out the world.** A topological sort puts prerequisites before advanced concepts, keeps related concepts adjacent, links consecutive islands with walkable bridges and shows other relationships as labelled sky arcs. Placement is seeded, so the same blueprint always produces the same world.
-7. **Render.** The blueprint maps onto a fixed set of components: islands, bridges, concept monuments, Riddle Stones (quiz), Scales of Truth (claim check), Sequence Steps (ordering), Pairing Totems (matching review), Source Lecterns and sky links. The model supplies data only, never code, HTML or scripts.
-
-On a GTX 1660 Ti laptop, a 3–4 page PDF becomes a 5-island world in about **45–95 seconds**, including the model's first load.
-
-### Why open-weight AI matters here
-
-- **Privacy.** The documents people study (lecture notes, papers, internal reports) never leave the machine. The server binds to `127.0.0.1` and calls a local runtime.
-- **Control and reproducibility.** The model is a pinned, inspectable file (`ollama show gemma4:e2b-it-qat` reports an Apache 2.0 license). You can swap it with one environment variable, run it offline and get the same pipeline every time.
-- **The model does the heavy lifting, not decoration.** Turning a document into a concept graph, objectives, island designs and grounded questions is the work a student or teacher would otherwise do by hand when they make notes, diagrams and practice questions.
-- **Small models work when the system checks them.** A 4.6B model runs on a 6 GB laptop GPU. Schema-constrained output plus grounding and repair make it dependable enough to build a world on, and every place it slips is visible to the learner.
-
-### Telling sources apart
-
-| Label in the UI | Meaning |
-|---|---|
-| **Supported by the PDF** / Quote verified | The cited quote was found on that page |
-| Verified · page number corrected | Found, but on a different page; the page was fixed |
-| **AI interpretation** / Closest matching passage | The model paraphrased; the nearest real sentence is linked |
-| **Not found in the PDF** | Nothing matched; the concept or challenge is flagged |
-| *Explanation (written by the model)* | The model's wording, not a quote |
-| **Beyond the source** (dashed purple box) | Extra explanation the model says isn't in the text |
-| *What the source leaves unclear* | The model's listed uncertainties |
-| Curated sample · hand-written | The sample world was written by hand, not by the model |
-
-Each AI world also has a **validation report** in the journal that lists every repair and flag.
-
-## The sample world: real math, not animations
-
-All numbers come from [`shared/math.ts`](shared/math.ts) and are covered by unit tests.
-
-- **Island 1 · The Neuron.** z = Σ wᵢxᵢ + b and sigmoid(z) are shown live. Tube thickness and colour encode each weight. Goals: make the neuron fire (≥ 0.90), go quiet (≤ 0.10) and balance at exactly 0.50.
-- **Island 2 · The Network.** A 3→4→2 sigmoid network. Pulses travel layer by layer with brightness proportional to weight × activation. Results appear only when the signal arrives. Goal: find an input pattern that pushes Output A above 0.75 (only `100` and `101` do).
-- **Island 3 · The Learning Arena.** Fit ŷ = w·x to four points. The table shows each error and the MSE, and the ball rolls along the real loss curve. Take gradient steps at learning rate 0.01, 0.05 or 0.14. At 0.14 the loss genuinely grows, because 0.14 > 2/15 ≈ 0.133, the divergence threshold for this data.
-
-Each island also has a quiz, a claim check or a sequencing puzzle tied to a verified quote in the 4-page guide [`public/samples/how-neural-networks-learn.pdf`](public/samples/how-neural-networks-learn.pdf). Upload that same PDF to compare the hand-made world with Gemma's.
-
-## Controls and accessibility
-
-- `W A S D` / arrow keys to move, drag to look, scroll to zoom, click the ground to walk there
-- `E` interact · `J` journal · `M` world map · `Esc` close
-- **Non-3D navigation:** the journal has a clickable concept map and island list with *Travel here* and *Read concept* buttons. Every challenge works with mouse or keyboard alone.
-- Progress saves automatically. *Exit* returns to the landing page without losing anything.
-
-## Testing
+**To create worlds from your own PDFs** (and to talk to Pip and Hoot), install [Ollama](https://ollama.com/download), then download Gemma once:
 
 ```bash
-npm test          # unit tests (Vitest)
-npm run e2e       # end-to-end in Chrome against the running app (npm run dev first)
-npm run e2e -- http://127.0.0.1:8787 --skip-ai   # against the production build, skip generation
+ollama pull gemma4:e2b-it-qat
 ```
 
-**Unit tests (35):** Pip's guard against over-crediting, Hoot's quote checks, Word Bridge building, route finding, neuron, network and gradient math (including a finite-difference gradient check and the divergence threshold), quote grounding (verified, relocated, approximate, unverified), quiz answer-key checks, blueprint repair (malformed quizzes, markup stripping, false claims that are verbatim in the source, step cleaning), every curated reference verifying against the sample text, and deterministic, non-overlapping, fully walkable layouts.
+The green dot on the start page shows when the model is ready. Without it, Pip turns into a self-check against the PDF's key sentences, and Hoot shows the most relevant passages instead of answering.
 
-**Hosted mode (5 checks, `e2e/hosted.ts`):** hosted privacy wording, a CPU-only `gemma3:1b` generation through the UI, and rate limiting.
+Tested on Windows 11 with Chrome. Other recent desktop browsers with WebGL should work, but haven't been tested.
 
-**End-to-end (21 checks, Playwright driving the real app in Chrome):** Walk-me-there routing, the Word Bridge, teaching Pip with real Gemma feedback, Hoot's verified answers and refusals, and spaced review. Also landing, the sample world with `/api` blocked, keyboard movement and edge collision, neuron values against the math (including real slider input), quiz and claim feedback, network propagation timing and values, the ordering puzzle, gradient-descent MSE and divergence, highlighted source passages, journal travel and world map, progress persistence across reload, panels at 1280×720 and 1024×640, rejection of `.txt`, fake, scanned and empty PDFs, model-missing and runtime-offline errors (on separate server instances), **real PDF → Gemma → validated world generation**, and zero console errors.
+## 2. Use it
 
-Latest results are in [docs/TEST_RESULTS.md](docs/TEST_RESULTS.md). Screenshots in [`docs/screenshots/`](docs/screenshots) are produced by the e2e run.
+**Explore the sample world**
 
-## Demo
+1. Click **Explore the sample world**, then **Start exploring**.
+2. Walk with `W A S D` or the arrow keys, drag to look around, scroll to zoom, or click the ground to walk there. **Walk me there** goes to your next challenge.
+3. Walk up to something glowing and press `E`.
 
-See [docs/DEMO.md](docs/DEMO.md) for a reproducible 3-minute demo script and screen-recording plan.
+The sample, *How Neural Networks Learn*, is hand-written and labelled as such. Its three islands have working labs, and every number is calculated live:
+
+- **The Neuron:** drag the weights, inputs and bias, and watch z = Σwx + b and sigmoid(z) change.
+- **The Network:** send a signal through a 3→4→2 network and watch it travel.
+- **The Learning Arena:** roll a ball down the real loss curve with gradient descent. A learning rate of 0.14 really does overshoot.
+
+![The neuron lab](docs/screenshots/05-neuron-lab.png)
+
+**Create a world from your PDF**
+
+1. Click **Create a world from a PDF** and drop in a PDF (up to 15 MB; the first 60 pages are used).
+2. Watch the stages: reading the PDF, mapping concepts, designing islands, checking quotes, raising islands.
+3. Explore your new world. Press `J` for the journal (a clickable concept map and the **validation report** of everything that was fixed or flagged) and `M` for the world map.
+
+No PDF handy? Try `public/samples/the-water-cycle.pdf`.
+
+![Professor Hoot answers from the PDF with a verified quote](docs/screenshots/24-hoot.png)
+
+**Keys:** `E` use · `H` ask Hoot · `J` journal · `M` world map · `Esc` close.
+
+## 3. Settings
+
+All settings are optional environment variables:
+
+| Variable | Default | What it does |
+|---|---|---|
+| `SLOTH_MODEL` | `gemma4:e2b-it-qat` | Any Ollama model that supports JSON output |
+| `OLLAMA_URL` | `http://127.0.0.1:11434` | Where Ollama is listening |
+| `SLOTH_MAX_CONCEPTS` | `6` | Islands per world (2–6). Fewer is faster |
+| `SLOTH_NUM_THREAD` / `SLOTH_NUM_GPU` / `SLOTH_NUM_CTX` | Ollama's / – / `8192` | CPU threads, `0` = CPU only, context size |
+| `SLOTH_CALL_TIMEOUT_MS` | `240000` | Time limit per model call |
+| `SLOTH_HOSTED` | off | `1` when running for other people: changes the privacy wording |
+| `SLOTH_RATE_LIMIT_PER_HOUR` / `SLOTH_TUTOR_LIMIT_PER_HOUR` | `0` (unlimited) | New worlds / Pip-and-Hoot questions per visitor per hour |
+| `PORT` / `HOST` | `8787` / `127.0.0.1` | The server only listens on your own computer by default |
+
+## 4. Put it online (Render)
+
+`render.yaml` and the `Dockerfile` run SlothWorld, Ollama and Gemma 3 1B together in one container on CPU, with rate limits so visitors can't run up your bill. In Render: **New → Blueprint → choose this repo**. See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md) for every step, the costs, and how to suspend it afterwards.
+
+When hosted, the app says that PDFs are processed on the server (in memory, not stored, and not sent to any AI company), instead of "never leaves your computer".
+
+## Safety
+
+- **Nothing is executed.** The PDF is read as text in memory, and no temporary files are written. The model's output is data checked against a strict schema; it can't add code, HTML or new kinds of object.
+- **Every quote is checked** against the text taken from your PDF. The passage you read is always the PDF's own words, never the model's.
+- **Wrong answers are dropped, not hidden.** Quizzes whose answer key disagrees with the source are removed, and the journal's validation report lists every fix.
+- **Honest failures.** Scanned PDFs (no OCR), password-protected files, a missing model and an offline model each give a clear message. The sample world always works.
+- **Local by default.** The server listens only on `127.0.0.1`. Saved worlds and progress stay in your browser.
 
 ## Known limitations
 
-- **No OCR.** Scanned or image-only PDFs are detected and rejected with instructions; they aren't read.
-- **Long documents are sampled.** The model sees a ~14k-character digest that covers every page, plus focused excerpts per concept, so details in very long PDFs can be missed. Only the first 60 pages are used.
-- **Small-model quality varies.** This matters most with `gemma3:1b` on the hosted demo: weak quizzes and some mislabelled claims (wrong answer keys are caught and dropped).
-- **Gemma 4 E2B quality also varies.** Gemma 4 E2B sometimes paraphrases quotes (these get flagged as *approximate*), writes easy questions or picks odd island names. Validation catches structural errors, but it can't fully judge whether a question is pedagogically good.
-- **Hand-built labs only in the sample.** Generated worlds use quizzes, claim checks, sequencing and matching. The neuron, network and loss labs are hand-built for the sample; the model does not invent simulations.
-- **The original PDF link lasts one session.** "Open the original PDF at p. N" works right after upload; after a reload, saved worlds show the extracted page text instead.
-- **One generation at a time** on the local GPU. Desktop browsers only, no mobile layout target.
+- **No OCR.** Scanned PDFs are detected and refused, with instructions.
+- **Long PDFs are sampled.** Some detail in long documents is missed.
+- **Small models make mistakes.** Gemma 3 1B (used online) writes simpler questions and can mislabel a claim; the source passage is always shown after you answer.
+- **The hands-on labs exist only in the sample world.** Generated worlds use quizzes, claims, sequences, Word Bridges, Pip and Hoot.
+- **Low-memory computers** can lose the 3D view while the model is running. A **Wake the world up** button reloads it, and your progress is kept.
 
-## Project structure
+## For developers
 
-```
-shared/        blueprint schema (Zod), grounding, repair/assembly, layout, math, sample world
-server/        Express API: pdf extraction, Ollama client, generation pipeline
-src/three/     React Three Fiber scene: islands, bridges, decor, sloth, player/camera, labs, stations
-src/ui/        landing, upload flow, HUD, panels, station cards, lab panels, journal
-tests/         Vitest unit tests
-e2e/           Playwright end-to-end acceptance run
-scripts/       sample-PDF generator, CLI generation, visual tours
-public/        curated low-poly nature models, font, sample PDFs
+**Run in development mode** (live reload):
+
+```bash
+npm run dev          # app on http://localhost:5173, API on 127.0.0.1:8787
 ```
 
-## Credits
+**Run the tests:**
 
-- Low-poly nature models (trees, bushes, rocks, clouds) come from the author's earlier asset library. 13 of its 450+ models were kept; the culturally specific buildings, vehicles and characters didn't fit this world and were removed. Everything else (islands, bridges, labs, stations and the sloth) is procedural geometry.
-- Fonts: Fredoka and Inter (SIL Open Font License), self-hosted.
-- Built with React, Three.js, React Three Fiber, drei, Zustand, Zod, pdf.js, Express and Ollama.
+```bash
+npm test             # 35 unit tests: math, quote checks, repairs, layout, Pip and Hoot guards
+npm run e2e          # 21 end-to-end checks in Chrome against the running app (needs npm run dev)
+npm run e2e -- http://127.0.0.1:8787 --skip-ai   # against the production build, without generation
+```
+
+The end-to-end run plays the game the way a learner would. It checks every lab's numbers against the math, walks the sloth between islands, teaches Pip and asks Hoot with the real model, uploads real, fake, scanned and empty files, and generates a world from a real PDF. Results are in [docs/TEST_RESULTS.md](docs/TEST_RESULTS.md).
+
+**Generate a world from the command line:**
+
+```bash
+npx tsx scripts/try-generate.ts public/samples/the-water-cycle.pdf world.json
+```
+
+**How the code is organised:**
+
+```
+shared/      world blueprint schema, quote checking, repairs, layout, math, sample world
+server/      PDF reading, Ollama client, world generation, Pip and Hoot
+src/three/   the 3D world: islands, bridges, the sloth and friends, labs, camera
+src/ui/      landing page, upload, panels, challenge cards, journal
+tests/ e2e/  unit and end-to-end tests
+```
+
+## License and credits
+
+SlothWorld is created by Harichand and released under the [MIT License](LICENSE).
+
+It builds on:
+
+- **Gemma** by Google (Gemma 4 E2B, reported by Ollama as Apache 2.0; Gemma 3 1B under the Gemma Terms of Use), run locally with [Ollama](https://ollama.com). The models are downloaded on your computer, not included here.
+- [React](https://react.dev), [three.js](https://threejs.org), [React Three Fiber](https://github.com/pmndrs/react-three-fiber) and drei, [pdf.js](https://mozilla.github.io/pdf.js/), [Zod](https://zod.dev), [Zustand](https://github.com/pmndrs/zustand), Express and Vite.
+- Fonts: Fredoka and Inter (SIL Open Font License).
+- Low-poly trees, bushes, rocks and clouds come from my earlier asset library. The islands, labs, characters and the sloth are generated in code.
