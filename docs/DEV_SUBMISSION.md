@@ -1,12 +1,12 @@
 ---
 title: "SlothWorld: a sloth turns the PDF you keep rereading into a world you can explore"
-tags: devchallenge, hf26challenge, gemma, render
+tags: devchallenge, hf26challenge, gemma, opensource
 cover_image: <!-- upload docs/screenshots/01-landing.png -->
 ---
 
 <!-- Before publishing: create the post from the official submission template (it adds #devchallenge and #hf26challenge), paste this in, and replace every comment in angle brackets. -->
 
-*This is a submission for the Hacktoberfest 2026 Open-Source AI Challenge, Week 3: Slow and Steady.*
+*This is a submission for the Hacktoberfest 2026 Open-Source AI Challenge, Week 3: Slow and Steady, in the Best Use of Gemma category.*
 
 ## What I built
 
@@ -62,16 +62,16 @@ Gemma only ever returns structured data. A fixed set of 3D components draws the 
 
 **Trust, but verify.** A small model is only useful for studying if you can see where it's wrong. So every quote is searched for in the PDF and labelled *verified*, *page corrected*, *closest matching passage* or *not found*. The passage you read is always the PDF's own words.
 
-The most useful lesson came from the smallest model. Running **Gemma 3 1B** on CPU, it marked the **wrong** answer as correct on 5 of its 6 quizzes for one PDF; one had "rivers and lakes" as the energy source that drives the water cycle. So I added an **answer-key check**: each quiz's answer must match the cited PDF passage, and Gemma's own explanation, better than every other option, or the quiz is dropped and noted in the world's validation report. It caught all 5 bad keys, and kept all 10 correct quizzes from earlier Gemma 4 runs. Pip has a similar guard: an idea only counts if your explanation shares real vocabulary with it, so an off-topic answer can't earn credit.
+The most useful lesson came from the smallest model. Running **Gemma 3 1B** on CPU only, it marked the **wrong** answer as correct on 5 of its 6 quizzes for one PDF; one had "rivers and lakes" as the energy source that drives the water cycle. So I added an **answer-key check**: each quiz's answer must match the cited PDF passage, and Gemma's own explanation, better than every other option, or the quiz is dropped and noted in the world's validation report. It caught all 5 bad keys, and kept all 10 correct quizzes from earlier Gemma 4 runs. Pip has a similar guard: an idea only counts if your explanation shares real vocabulary with it, so an off-topic answer can't earn credit.
 
 ## Why open innovation matters here, and where it beat closed
 
 - **Your notes stay yours.** Run locally, the PDF is read, mapped and quizzed entirely on your laptop. There's no account and no upload. Lecture notes, drafts and work documents never touch a server you don't control.
 - **It works offline, and costs nothing to run.** Once Gemma is downloaded, there's no API key, no per-token bill and no usage cap. Once the model is loaded, Pip and Hoot answer in a second or two on a 6 GB laptop GPU, so you can talk to them as much as you like.
-- **I could pick the right model for each place, and swap with one setting.** On my laptop I use **Gemma 4 E2B**: about 45–110 s per world, and better questions. For the public demo on CPU I use **Gemma 3 1B**. Same code; `SLOTH_MODEL` is the only difference.
+- **I could pick the right model for each machine, and swap with one setting.** With a GPU I use **Gemma 4 E2B**: about 45–110 s per world, and better questions. On a CPU-only laptop, **Gemma 3 1B** builds a 4-island world in about 3–5 minutes. Same code; `SLOTH_MODEL` is the only difference.
 - **I could see and fix its mistakes.** Because I run the model myself, I could test it on my own documents, watch it get answer keys wrong, and build checks around exactly those failures. With a hosted black box I'd have the same mistakes and less ability to understand them.
 
-**Render as the AI runtime.** The online version runs in a single Render container: the web app, Ollama and Gemma 3 1B together, on plain CPUs with no GPU and no outside AI API. A world takes about 3–6 minutes there instead of 1 on a laptop GPU, and the online app is honest about privacy: it says your PDF is processed on the SlothWorld server, in memory, not stored, and not sent to any AI company. Each visitor gets 3 worlds and 40 questions per hour, so everyone gets a turn.
+**Gemma on almost any laptop.** Because both models are open and run through Ollama, SlothWorld needs no cloud and no GPU: the 815 MB Gemma 3 1B runs on just the CPU. The answer-key check above is what makes even the smallest model safe to learn from.
 
 ## How I built it
 
@@ -84,16 +84,15 @@ The most useful lesson came from the smallest model. Running **Gemma 3 1B** on C
 - **No OCR.** Scanned PDFs are detected and you're told how to fix them.
 - **Long PDFs are sampled.** Very long documents lose detail.
 - **The hands-on labs are hand-built** for the sample world. Generated worlds get quizzes, claims, sequences, Word Bridges, Pip and Hoot.
-- **The small online model writes simpler questions** than Gemma 4 on your own machine.
+- **The small CPU model (Gemma 3 1B) writes simpler questions** than Gemma 4.
 
 ## Try it
 
-- 🌐 **Play online:** <!-- Render URL -->
-- 💻 **Run it yourself** (full Gemma 4 experience, works offline): <!-- https://github.com/royalharry007/SlothWorld -->
+- 💻 **Code and setup:** https://github.com/royalharry007/SlothWorld (MIT licensed, runs offline)
   ```bash
   git clone https://github.com/royalharry007/SlothWorld.git
   cd SlothWorld && npm install && npm run build && npm start
-  ollama pull gemma4:e2b-it-qat   # enables PDF worlds, Pip and Hoot
+  ollama pull gemma4:e2b-it-qat   # enables PDF worlds, Pip and Hoot (or gemma3:1b on a CPU-only laptop)
   ```
 
 Stop rereading. Let the sloth do the chores, then explore. 🦥
