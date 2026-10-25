@@ -1,134 +1,99 @@
 ---
-title: "SlothWorld: Gemma turns the PDF you keep rereading into islands you can explore"
-tags: devchallenge, gemma, opensource, ai
+title: "SlothWorld: a sloth turns the PDF you keep rereading into a world you can explore"
+tags: devchallenge, hf26challenge, gemma, render
 cover_image: <!-- upload docs/screenshots/01-landing.png -->
 ---
 
-<!-- Before publishing, replace every comment in angle brackets: repo link, live demo link, video. -->
+<!-- Before publishing: create the post from the official submission template (it adds #devchallenge and #hf26challenge), paste this in, and replace every comment in angle brackets. -->
 
-*This is a submission for the Hacktoberfest 2026 challenge.*
+*This is a submission for the Hacktoberfest 2026 Open-Source AI Challenge, Week 3: Slow and Steady.*
 
-## The 2 a.m. PDF
+## What I built
 
-You know the one. Forty pages, due tomorrow, and you've read the same paragraph four times. Your eyes move; nothing sticks.
+You know the PDF. Forty pages, due tomorrow, and you've read the same paragraph four times.
 
-Rereading feels like studying, but it's mostly passive. What actually helps is slower and more active: asking what an idea *does*, poking at it, being wrong and finding out why. That kind of studying takes effort to set up. Someone has to turn the PDF into questions, diagrams and something to try. Usually that someone is you, at 2 a.m.
+Studying it properly means doing a pile of chores first: pick out the key ideas, write notes, make flashcards and practice questions, check your answers against the text, and remember to revise next week. Most of us skip the chores and just reread. That's the least effective option there is.
 
-So I built a sloth to do that part.
+**SlothWorld does the chores for you.** Drop in a PDF and a sloth turns it into a small 3D world in about a minute. Each key idea becomes an island, bridges lead from the basics to the ideas built on them, and every island has something to *do*:
 
-## What SlothWorld is
+- 🪨 **Riddle Stones** (quizzes) and ⚖️ **Scales of Truth** (is this claim supported by your PDF?)
+- 🌉 **Word Bridges:** a real sentence from your PDF with the key words missing
+- 🦥 **Pip**, a baby sloth who doesn't get the idea yet and wants *you* to explain it
+- 🦉 **Professor Hoot** (press `H`), who answers questions only from your PDF, with the page
+- 🏮 **The Review Grove**, which brings what you solved back after 10 minutes, then 1, 3, 7 and 21 days
 
-**SlothWorld turns a dense PDF into a small 3D world you explore at your own pace.** Each key idea becomes an island. Bridges lead from foundations to the ideas that build on them. On every island something asks you to think, not reread:
+There are no timers, no streaks and no penalty for a wrong answer. You move at sloth speed; the sloth did the work.
 
-- 🪨 a **Riddle Stone**: a multiple-choice question about the idea
-- ⚖️ a **Scale of Truth**: a claim to judge; is it supported by the text or not?
-- 🔢 **Sequence Steps**: put a process in order, but only when the document actually describes one
-- 📖 a **Source Lectern**: opens the exact page the island came from, with the passage highlighted
+<!-- embed the demo video here -->
 
-<!-- embed demo video or GIF here -->
+## The lazy payoff
 
-It's for students, self-learners and anyone who has a document they *need* to understand, not just get through.
+| The chore | Done by |
+|---|---|
+| Finding the key ideas and the order to learn them | Gemma, about a minute for a short PDF |
+| Writing quizzes, flashcards and fill-in-the-blank sentences | Gemma and plain code, from your PDF's own sentences |
+| Checking answers against the text | Code: every quote and answer key is matched against the PDF |
+| Explaining it to someone, the best test of understanding | Pip, on every island |
+| Remembering to revise | The Review Grove, on a schedule |
 
-## Meet the cast: helpers that teach *with* you
+It's built this way on purpose. Rereading and highlighting are rated among the least useful study techniques, while practice testing and spaced practice are rated the most useful ([Dunlosky et al., 2013](https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html)). And students try harder when they teach someone, the "protégé effect" ([Chase et al., 2009](https://purl.stanford.edu/zm369yx3532)). The lazy way to study well is to let a sloth set up the effective habits for you.
 
-Research on studying is blunt: rereading and highlighting rank among the least useful techniques, and practice testing and spaced practice among the most useful (Dunlosky et al., 2013). Students also try harder when they *teach* someone (the "protégé effect", Chase et al., 2009). So SlothWorld gives you a small cast, each with one job:
+## Demo
 
-- 🦥 **Pip**, a baby sloth on every island who doesn't get the concept yet. You explain it in your own words. Gemma checks your explanation against key sentences copied from your PDF, then Pip asks *one* curious question about what you missed, without giving the answer away. In testing, a half-explanation earned 1 of 3 ideas and the nudge "What happens after you add those weighted inputs together?"
-- 🦉 **Professor Hoot**, who answers your questions using *only* your PDF, with a quote SlothWorld verifies. Ask about something the PDF doesn't cover and Hoot says so instead of guessing.
-- 🏮 **The Review Grove**, where what you solved comes back after 10 minutes, then 1, 3, 7 and 21 days. A few minutes now and then beats one long cram.
+<!-- embed video; add a GIF of teaching Pip -->
 
-Behind the scenes, two more Gemma "agents" build each world (a cartographer that maps the concepts, and a builder that designs each island), and a fact-checker written in plain code holds all of them to your PDF.
+1. **The sample world** (*How Neural Networks Learn*, hand-written and labelled as such) has three working labs. Drag a neuron's weights and watch the output change; send a signal through a small network; roll a ball down a real loss curve with gradient descent. Every number is computed live.
+2. **Teach Pip.** I typed half an explanation. Pip said I'd covered 1 of 3 key ideas and asked, *"What happens after you add those weighted inputs together?"* After my full answer: *"Ooh, I get it now!"*
+3. **Ask Hoot** "What does the bias do?": the answer comes with the exact sentence from page 1, verified against the PDF. Ask about something the PDF doesn't cover and Hoot says so.
+4. **My own PDF:** a 3-page water-cycle primer became a 5-island world in about 70 seconds, with every concept's quote verified against the PDF.
 
-## Slow and steady, on purpose
+![Teaching Pip](<!-- upload docs/screenshots/23-teach-pip.png -->)
 
-The mascot isn't a joke about being lazy. Sloths are deliberate: they move only when they need to, and they get where they're going.
+## Open models at the core
 
-SlothWorld is built around that:
+Gemma does the jobs a study partner would do. Plain code keeps it honest.
 
-- **No timers, no streaks, no scores to protect.** Nothing in the app is timed.
-- **Being wrong is part of it.** A wrong answer says "look again"; after a couple of tries you get a hint. Then you see the real passage from your PDF and why the answer is right.
-- **You set the pace.** Walk the islands in order, or open the journal and jump anywhere. Leave mid-island; your progress is saved.
-- **The calm is deliberate.** Floating islands, warm light, a slow-blinking sloth in a leaf hat. Studying is stressful enough.
+1. **Map the concepts.** Gemma reads the page-marked text and returns 4–6 key ideas with explanations, prerequisites, relationships, learning objectives and what the PDF leaves unclear. Each comes with a page number and a quote.
+2. **Design each island.** For each idea, Gemma sees only the relevant pages and writes a quiz, a true-or-false claim, and a sequence (only if the text describes one).
+3. **Be Pip.** Gemma judges which key ideas your explanation conveys and asks one Socratic question, never giving the answer away.
+4. **Be Hoot.** Gemma answers from the relevant pages with a quote.
 
-The effort SlothWorld saves is the tedious part: turning pages into practice. A 4-page PDF becomes a 5-island world with about a dozen challenges in **about a minute** on my laptop. The slow part, actually understanding the material, stays with you, and it's the part worth keeping.
+Gemma only ever returns structured data. A fixed set of 3D components draws the world, so the model never writes code or HTML.
 
-## Learning by doing: the sample world
+**Trust, but verify.** A small model is only useful for studying if you can see where it's wrong. So every quote is searched for in the PDF and labelled *verified*, *page corrected*, *closest matching passage* or *not found*. The passage you read is always the PDF's own words.
 
-To show what the islands *can* be, I hand-built a sample world about **How Neural Networks Learn**. It's clearly labelled as hand-written, not AI-generated, and it works offline with no model at all:
+The most useful lesson came from the smallest model. Running **Gemma 3 1B** on CPU, it marked the **wrong** answer as correct on 5 of its 6 quizzes for one PDF; one had "rivers and lakes" as the energy source that drives the water cycle. So I added an **answer-key check**: each quiz's answer must match the cited PDF passage, and Gemma's own explanation, better than every other option, or the quiz is dropped and noted in the world's validation report. It caught all 5 bad keys, and kept all 10 correct quizzes from earlier Gemma 4 runs. Pip has a similar guard: an idea only counts if your explanation shares real vocabulary with it, so an off-topic answer can't earn credit.
 
-- **The Neuron.** Drag weights, inputs and the bias, and watch z = Σwx + b and sigmoid(z) change live. Tube thickness and colour show each weight. Challenge: make it fire, go quiet, then balance at exactly 0.5.
-- **The Network.** Flip three inputs and send a signal through a 3→4→2 network. The pulses glow by weight × activation. Find the input pattern that makes Output A fire.
-- **The Learning Arena.** Roll a ball down the *real* loss curve with gradient steps. Then try learning rate 0.14 and watch the loss climb, because 0.14 is above this data's divergence limit of 2/15.
+## Why open innovation matters here, and where it beat closed
 
-Every number is computed, not animated, and unit tests check it.
+- **Your notes stay yours.** Run locally, the PDF is read, mapped and quizzed entirely on your laptop. There's no account and no upload. Lecture notes, drafts and work documents never touch a server you don't control.
+- **It works offline, and costs nothing to run.** Once Gemma is downloaded, there's no API key, no per-token bill and no usage cap. Once the model is loaded, Pip and Hoot answer in a second or two on a 6 GB laptop GPU, so you can talk to them as much as you like.
+- **I could pick the right model for each place, and swap with one setting.** On my laptop I use **Gemma 4 E2B**: about 45–110 s per world, and better questions. For the public demo on CPU I use **Gemma 3 1B**. Same code; `SLOTH_MODEL` is the only difference.
+- **I could see and fix its mistakes.** Because I run the model myself, I could test it on my own documents, watch it get answer keys wrong, and build checks around exactly those failures. With a hosted black box I'd have the same mistakes and less ability to understand them.
 
-![The neuron lab](<!-- upload docs/screenshots/05-neuron-lab.png -->)
+**Render as the AI runtime.** The online version runs in a single Render container: the web app, Ollama and Gemma 3 1B together, on plain CPUs with no GPU and no outside AI API. A world takes about 3–6 minutes there instead of 1 on a laptop GPU, and the online app is honest about privacy: it says your PDF is processed on the SlothWorld server, in memory, not stored, and not sent to any AI company. Each visitor gets 3 worlds and 40 questions per hour, so everyone gets a turn.
 
-## Where Gemma comes in
+## How I built it
 
-The worlds you create from your own PDFs are designed by **Gemma**, and it's doing real work, not decoration:
-
-1. **Mapping the concepts.** Gemma reads the page-marked text and returns 4–6 key concepts, with explanations, prerequisites, how they relate, learning objectives, and what the document leaves *unclear*. Each concept comes with a page number and a quote copied from that page.
-2. **Designing the islands.** For each concept, Gemma sees only the pages about it and designs a quiz, a claim to judge (alternating true and false), and a sequence only if the text describes one.
-
-Both steps use structured, schema-constrained JSON. The model only fills in data. A fixed set of 3D components does the rendering, so the model never writes code or HTML.
-
-I use two Gemma models, each where it fits:
-
-| | Model | Runs on | A 3–4 page PDF takes |
-|---|---|---|---|
-| On your own computer | **Gemma 4 E2B** (`gemma4:e2b-it-qat`, 4.6B) | a 6 GB laptop GPU via Ollama | ~45–95 s, 5 islands |
-| Public demo on Render | **Gemma 3 1B** (`gemma3:1b`) | 2 CPU cores, no GPU | ~4–5 min, 4 islands |
-
-## Trust, but verify: what a 1-billion-parameter model taught me
-
-Small models are wonderful because anyone can run them. They're also confidently wrong sometimes. So SlothWorld treats every model answer as a suggestion to check against the PDF:
-
-- **Every quote is searched for in the PDF's actual text.** Each one is labelled *verified*, *page number corrected*, *closest matching passage* or *not found*. The passage you read is always the PDF's own words, never the model's.
-- **The model's explanations are labelled as the model's.** Anything it adds beyond the text appears in a separate "Beyond the source" box.
-- **Every repair is visible.** The journal has a validation report listing what was fixed or flagged.
-
-The most interesting moment came while preparing the CPU-only Render version. On a water-cycle PDF, **Gemma 3 1B marked the wrong answer as correct on 5 of its 6 quizzes**. One had "rivers and lakes" as the energy source that drives the water cycle. The quotes it cited were real; its answer keys weren't.
-
-A study tool that confidently teaches wrong answers is worse than no tool. So I added an **answer-key check**: each quiz's answer must match the PDF passage it cites *and* the model's own explanation better than every other option does, or the quiz is dropped and noted. On the water-cycle run it **caught all 5 bad keys**. Re-checking earlier Gemma 4 runs, it **kept all 10 of their correct quizzes**.
-
-The model does the creative work, and plain, checkable code keeps it honest. That pairing is what makes a small open model good enough to learn from.
-
-## Why open models matter here
-
-- **Your notes stay yours.** Running locally, the PDF never leaves your computer: no account, no upload, no API key. That matters for lecture notes, drafts and anything you'd rather not hand to a company.
-- **Anyone can run it.** A student with a mid-range laptop gets the full experience for free, offline, forever. No usage limits.
-- **It can be checked and changed.** The model is a pinned file you can inspect or swap with one setting. The whole app is open source, so if you want a new kind of island, it's one more component.
-- **Even the hosted demo stays open.** The public version runs an open-weight Gemma on a plain CPU server. Your PDF goes to that server, but not to any AI company, and it isn't stored.
-
-## How it's built
-
-React + React Three Fiber for the world; Zustand, Zod and pdf.js; an Express server; Ollama running Gemma. All the islands, bridges, labs and the sloth itself are procedural geometry; only the trees and rocks are reused low-poly models.
-
-Under the hood, the order of the islands isn't random. A deterministic layout puts prerequisites before the ideas that need them, keeps related ideas next to each other, and shows other relationships as labelled arcs in the sky. The same document always gives the same world.
-
-**Does it work?** I tested it the way a user would:
-
-- **35 unit tests** cover the math, quote checking, repairs, layout, and the guards on Pip and Hoot (e.g. Pip can't be flattered into crediting an off-topic answer).
-- **21 end-to-end checks** drive the real app in Chrome: teaching Pip with real model feedback, Hoot's verified answers and refusals, spaced review, walking the sloth between islands, walking, every lab's numbers against the math, quiz feedback, source links, journal travel, saved progress, bad uploads (a text file, a fake PDF, a scanned PDF, an empty file), a missing model, an offline model, and a **real PDF → Gemma → world generation**. All 16 pass on the production build.
-- **5 hosted-mode checks** cover the Render setup: a full generation on CPU-only Gemma 3 1B, the privacy wording and the rate limit.
+- **Frontend:** React and React Three Fiber (three.js). The islands, bridges, labs, Pip, Hoot and the sloth are procedural low-poly geometry, and the trees and rocks are reused models. Placement is deterministic: prerequisites first, related ideas next to each other.
+- **Backend:** Node and Express read PDFs with pdf.js, in memory. Gemma runs through Ollama with JSON-schema-constrained output, then Zod validation and the repair and grounding checks.
+- **Tests:** 35 unit tests, and 21 end-to-end checks that play the game in Chrome the way a learner would: the labs' numbers against the math, walking between islands, teaching Pip and asking Hoot with the real model, bad uploads (text, fake, scanned and empty files), and generating a world from a real PDF.
 
 ## What it can't do (yet)
 
-- **No OCR:** scanned PDFs are detected and you're told how to fix them.
-- **Long documents are sampled,** so very long PDFs lose detail.
-- **The hands-on labs are hand-built.** Generated worlds get quizzes, claims, sequences and matching, not invented simulations.
-- **The small hosted model writes simpler questions** than Gemma 4 on your own machine. That's the honest trade for running anywhere.
-
-Next, I'd like to add spaced review: islands that gently resurface a few days later, at sloth speed.
+- **No OCR.** Scanned PDFs are detected and you're told how to fix them.
+- **Long PDFs are sampled.** Very long documents lose detail.
+- **The hands-on labs are hand-built** for the sample world. Generated worlds get quizzes, claims, sequences, Word Bridges, Pip and Hoot.
+- **The small online model writes simpler questions** than Gemma 4 on your own machine.
 
 ## Try it
 
-- 🌍 **Play online:** <!-- Render URL -->. The sample world is instant; making a world from your PDF takes a few minutes on the free-to-use demo server.
-- 💻 **Run it yourself** (full speed with Gemma 4): <!-- GitHub repo URL -->
+- 🌐 **Play online:** <!-- Render URL -->
+- 💻 **Run it yourself** (full Gemma 4 experience, works offline): <!-- https://github.com/royalharry007/SlothWorld -->
   ```bash
-  npm install && npm run dev
-  ollama pull gemma4:e2b-it-qat   # optional: enables PDF → world
+  git clone https://github.com/royalharry007/SlothWorld.git
+  cd SlothWorld && npm install && npm run build && npm start
+  ollama pull gemma4:e2b-it-qat   # enables PDF worlds, Pip and Hoot
   ```
 
-Stop rereading. Start exploring, slowly. 🦥
+Stop rereading. Let the sloth do the chores, then explore. 🦥
