@@ -1,0 +1,6 @@
+node_modules
+dist
+*.log
+!docs/*.log
+.env
+tsconfig.tsbuildinfo

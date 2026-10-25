@@ -1,0 +1,11 @@
+
+Hosted-mode checks against http://127.0.0.1:8788
+
+  ✓ Health reports hosted mode, model and rate limit — hosted, gemma3:1b, 1/hour (0s)
+  ✓ Landing and upload dialog use server-side privacy wording — no "never leaves this computer" claim (3s)
+  ✓ CPU-only gemma3:1b generates a validated world through the UI (keep-alive pings handled) — "Understanding the Water Cycle" by gemma3:1b: 4 islands, 11 stations, 6 validation notes (272s)
+  ✓ Second world within the hour is rate-limited with a clear message — This demo server allows 1 new world per hour per visitor.Your saved worlds and the sample … (1s)
+  ✓ No page errors — 0 (0s)
+
+All hosted-mode checks passed
+

@@ -1,0 +1,22 @@
+# Render Blueprint: in the Render dashboard choose New → Blueprint and select this repo.
+# One Docker web service runs SlothWorld + Ollama + gemma3:1b on CPU.
+# Plan sizing (check current prices at render.com/pricing):
+#   pro      (2 CPU / 4 GB)  recommended — about 3–6 min per 4-island world
+#   standard (1 CPU / 2 GB)  cheaper, slower, tight on memory; set SLOTH_NUM_THREAD=1
+services:
+  - type: web
+    name: slothworld
+    runtime: docker
+    plan: pro
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: false
+    envVars:
+      - key: SLOTH_RATE_LIMIT_PER_HOUR
+        value: "3"
+      - key: SLOTH_TUTOR_LIMIT_PER_HOUR
+        value: "40"
+      - key: SLOTH_MAX_CONCEPTS
+        value: "4"
+      - key: SLOTH_NUM_THREAD
+        value: "2"
