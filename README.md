@@ -2,77 +2,81 @@
 
 **Stop rereading. Start exploring.**
 
-A 3D web game that turns a dense PDF into small islands you walk around, experiment on, and teach your way through, powered by Google's open Gemma models. Play it online, or run it entirely on your own laptop.
+Hi, I'm **Harichand**, and this is my entry for the **Hacktoberfest 2026 Open-Source AI Challenge, Week 3: *Slow and Steady***, in the **Best Use of Gemma** category.
 
-Created by Harichand for the **Hacktoberfest 2026 Open-Source AI Challenge, Week 3: *Slow and Steady***. Built with **Gemma**, which runs locally on a laptop, and **Render**, which runs Gemma as the online demo's AI runtime.
+SlothWorld is a 3D web game that turns a dense PDF into small islands you walk around, experiment on, and teach your way through. Google's open **Gemma** model does the hard work, right on your own laptop.
 
-> **Try it now**
->
-> 🌐 **Play online:** <!-- REPLACE with your Render URL --> *link coming soon* (the hosted demo runs Gemma 3 1B on Render)
->
-> 🎬 **Watch the 3-minute demo:** <!-- REPLACE with your video link --> *coming soon*
->
-> 💻 **Run it on your laptop in 2 minutes:** see [Install](#1-install)
+<!-- Harichand: add one or two sentences here about a PDF you struggled with and why you built this. -->
 
 ![Teaching Pip: Pip gets 1 of 3 key ideas from a half-explanation, asks a nudging question, then understands after the full explanation](docs/screenshots/23-teach-pip.png)
 
-- **Explore.** Each key idea in your PDF becomes an island. Bridges lead from the basics to the ideas that build on them. A *Walk me there* button takes the sloth to your next challenge.
-- **Teach Pip.** On every island, Pip the baby sloth doesn't get the idea yet. You explain it in your own words. Pip checks which key sentences from your PDF came across, and asks one question about what you missed, without giving the answer away.
-- **Ask Professor Hoot.** Press `H` anywhere. Hoot answers only from your PDF and shows the exact sentence, with a link to the page. If your PDF doesn't cover it, Hoot says so.
-- **Practise.** Riddle Stones (quizzes), Scales of Truth (is this claim supported?), Sequence Steps (put a process in order) and Word Bridges (put the key words back into a real sentence from your PDF).
-- **Remember.** What you solve comes back in the Review Grove after 10 minutes, then 1, 3, 7 and 21 days. A miss starts that item over.
-- **Slow and steady.** No timers, no streaks, no penalty for a wrong answer. Your progress is saved, and islands bloom with flowers as you learn.
-- **Private.** No account needed. Run it yourself and your PDF never leaves your computer.
+<!-- Add the demo video link here: 🎬 **Watch the demo:** <link> -->
 
-## The lazy payoff
+## Why this is a "Slow and Steady" project
 
-Studying properly from a dense PDF means doing a pile of chores first: reading it all, picking out the key ideas, writing notes, making flashcards and practice questions, and remembering to revise. Most of us skip the chores and just reread, which is the least effective option.
+This week's prompt asked for *something that rewards laziness, that does the work so you don't have to*. Sloths conserve their energy and move at their own pace. I wanted a sloth that does exactly that for studying.
 
-**SlothWorld does the chores for you.** Drop in a PDF and a sloth turns it into a small world in about a minute:
+Studying a dense PDF *properly* means doing a pile of chores before you learn anything: pick out the key ideas, write notes, make flashcards and practice questions, check your answers against the text, and remember to revise next week. Most people skip the chores and just reread the PDF again. That happens to be one of the least effective ways to study.
 
-| The chore you'd normally do | What SlothWorld does instead |
+**So I made the sloth do the chores.** Drop in a PDF, and about a minute later it's a world:
+
+| The chore you'd normally do | What SlothWorld does for you |
 |---|---|
-| Pick out the key ideas and how they connect | Maps 4–6 concepts in learning order, each with its page and quote |
-| Write practice questions and flashcards | Builds quizzes, true-or-false claims, fill-in sentences and sequencing puzzles for every idea |
-| Check your answers against the text | Checks every quote and answer key against your PDF |
-| Find someone to explain it to | Pip waits on every island to be taught |
-| Remember to revise | The Review Grove brings challenges back in 10 minutes, then 1, 3, 7 and 21 days |
+| Pick out the key ideas and the order to learn them | Gemma maps 4–6 concepts, prerequisites first, each with its page and a quote |
+| Write practice questions and flashcards | Quizzes, true-or-false claims, fill-in sentences and sequencing puzzles for every idea |
+| Check your answers against the text | Every quote and answer key is checked against your PDF |
+| Explain it to someone (the best test of understanding) | Pip, a baby sloth on every island, waits for you to teach them |
+| Remember to revise | The Review Grove brings challenges back after 10 minutes, then 1, 3, 7 and 21 days |
 
-Then you get to be slow: nothing is timed, there are no streaks, and a wrong answer just means "look again". A sloth would approve.
+Then you get to be slow and steady: nothing is timed, there are no streaks to protect, and a wrong answer just means "look again". The sloth did the work; you just explore.
 
-## Why it's built this way
+I didn't want it to be lazy in the bad sense either. Rereading and highlighting are rated among the *least* useful study techniques, while practice testing and spaced practice are rated the *most* useful ([Dunlosky et al., 2013](https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html)). People also try harder when they teach someone, the "protégé effect" ([Chase et al., 2009](https://purl.stanford.edu/zm369yx3532)). SlothWorld sets up those effective habits for you, so the lazy way to study is also the good way.
 
-Rereading, highlighting and summarising are rated among the *least* useful ways to study. Practice testing and spaced practice are rated the *most* useful ([Dunlosky et al., 2013](https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html)). Students also try harder when they teach someone, the "protégé effect" ([Chase et al., 2009](https://purl.stanford.edu/zm369yx3532)).
+## What you can do in SlothWorld
 
-So SlothWorld doesn't summarise your PDF for you. It turns it into things to *do*: teach, answer, recall later.
+- **Explore.** Each key idea is an island, and bridges lead from the basics to the ideas that build on them. Click **Walk me there** and the sloth wanders to your next challenge.
+- **Teach Pip.** Explain the idea in your own words. Pip knows only the key sentences from your PDF, tells you which ones came across, and asks *one* question about what you missed, without giving the answer away.
+- **Ask Professor Hoot.** Press `H` anywhere. Hoot answers only from your PDF, shows the exact sentence and links to the page. If your PDF doesn't cover it, Hoot says so instead of guessing.
+- **Practise.** Riddle Stones (quizzes), Scales of Truth (is this claim supported?), Sequence Steps and Word Bridges (put the key words back into a real sentence from your PDF).
+- **Remember.** Solved challenges grow into the Review Grove and come back at spaced intervals.
+- **Watch it bloom.** Islands fill with flowers as you learn. Your progress is saved, so you can stop whenever you like.
 
-## Gemma at the core
+There's also a hand-written sample world, *How Neural Networks Learn*, with three working labs: tune a real neuron, send a signal through a small network, and roll a ball down a real loss curve with gradient descent. Every number is calculated live.
 
-SlothWorld uses Google's **Gemma** open models, running locally through [Ollama](https://ollama.com). Gemma is used for a few narrow jobs. It never writes code or HTML, and plain code checks everything it says against your PDF before you see it.
+![The neuron lab](docs/screenshots/05-neuron-lab.png)
 
-| Job | What Gemma does | What the code checks |
+## How I used Gemma
+
+Gemma is the core of the project: without it there are no worlds, no Pip and no Hoot. I gave it four narrow jobs, and wrote plain code that checks everything it says against your PDF before you see it.
+
+| Gemma's job | What it does | How I keep it honest |
 |---|---|---|
-| **Map the concepts** | Reads the page-marked text and picks 4–6 key ideas, with explanations, prerequisites, how they connect, learning objectives, and what the PDF leaves unclear. Each idea comes with a page number and a quote. | Every quote is searched for in the PDF's actual text. Page numbers are corrected; quotes that aren't found are flagged in red. |
-| **Design each island** | Writes a quiz, a true-or-false claim, and a sequence (only if the text describes one). | Bad options are repaired or dropped. **Answer keys are checked**: a quiz is dropped if another option matches the cited passage, or Gemma's own explanation, better than the keyed answer. |
-| **Be Pip** | Judges which key ideas your explanation conveys, and asks one Socratic question. | Pip's key ideas are sentences copied from your PDF. An idea only counts if your explanation shares real vocabulary with it, so Pip can't be flattered by an off-topic answer. |
-| **Be Hoot** | Answers your question from the relevant pages, with a quote. | The quote is verified against the PDF; a made-up one is labelled "could not be found". |
+| **Cartographer** | Reads the PDF and maps the key ideas: explanations, prerequisites, how they connect, learning objectives, and what the PDF leaves unclear. Each comes with a page and a quote. | Every quote is searched for in the PDF's real text. Wrong page numbers are corrected; quotes that aren't found are flagged in red. |
+| **Island designer** | Writes a quiz, a true-or-false claim, and a sequence (only if the text describes one). | **Answer keys are checked**: a quiz is dropped if another option matches the cited passage, or Gemma's own explanation, better than the keyed answer. |
+| **Pip** | Judges which key ideas your explanation conveys, and asks one Socratic question. | An idea only counts if your explanation shares real vocabulary with that PDF sentence, so Pip can't be flattered by an off-topic answer. |
+| **Professor Hoot** | Answers your question from the relevant pages, with a quote. | The quote is verified against the PDF; a made-up one is labelled "could not be found". |
 
-The Word Bridges and the Review Grove are built by code from verified sentences, with no model involved.
+Gemma only ever returns structured data. A fixed set of 3D components draws the world, so the model never writes code or HTML. The Word Bridges and Review Grove are built by code from verified sentences.
 
-**Two Gemma models, each where it fits:**
+**Gemma on any laptop.** I tested two sizes:
 
-| | Model | Runs on | A 3–4 page PDF takes |
+| | Model | On | A 3–4 page PDF becomes a world in |
 |---|---|---|---|
-| Your own computer (default) | **Gemma 4 E2B** (`gemma4:e2b-it-qat`, 4.6B, ~4.3 GB) | A laptop GPU (tested on a 6 GB GTX 1660 Ti) | ~45–110 s, 5 islands |
-| The public demo on Render | **Gemma 3 1B** (`gemma3:1b`, ~815 MB) | 2 CPU cores, no GPU | ~3–6 min, 4 islands |
+| **Default** | Gemma 4 E2B (`gemma4:e2b-it-qat`, ~4.3 GB) | a laptop GPU (my 6 GB GTX 1660 Ti) | about 45–110 seconds, 5 islands |
+| **No GPU?** | Gemma 3 1B (`gemma3:1b`, ~815 MB) | just the CPU (tested with 2 threads) | about 3–5 minutes, 4 islands |
 
-**What testing showed:** on CPU, Gemma 3 1B marked the wrong answer as correct on 5 of its 6 quizzes for one PDF. The answer-key check caught all 5. Run against earlier Gemma 4 output, it kept all 10 correct quizzes.
+**What testing taught me:** the tiny Gemma 3 1B marked the *wrong* answer as correct on 5 of its 6 quizzes for one PDF; one said "rivers and lakes" drive the water cycle. That's why I built the answer-key check. It caught all 5, and kept all 10 correct quizzes from Gemma 4. A study tool must never confidently teach something wrong.
 
-Everything the model writes is labelled as the model's in the app. Quotes show whether they were *verified*, had their *page corrected*, are only the *closest matching passage*, or were *not found*.
+## Why open models matter for this, and where open beat closed
 
-## 1. Install
+- **Your notes stay yours.** The PDF is read, mapped and quizzed entirely on your computer. No account, no upload, no server you don't control. That matters for lecture notes, drafts and work documents.
+- **It works offline and costs nothing to run.** Once Gemma is downloaded there's no API key, no per-token bill and no usage cap. Once the model is loaded, Pip and Hoot answer in a second or two on my laptop, so you can ask as much as you like.
+- **I could choose the right model for each machine.** Gemma 4 for laptops with a GPU, and Gemma 3 1B for CPU-only machines. Same code; one setting (`SLOTH_MODEL`) switches them.
+- **I could see its mistakes and fix them.** Running the model myself meant I could test it on my own documents, watch exactly where it went wrong (like those answer keys), and build checks for those failures. With a closed, hosted model I'd face the same kinds of mistakes but have far less room to study and fix them.
 
-You need **Node.js 20 or newer** ([nodejs.org](https://nodejs.org)) and **Git**.
+## Try it
+
+You need **Node.js 20+** ([nodejs.org](https://nodejs.org)), **Git**, and, for creating worlds from your own PDFs, [Ollama](https://ollama.com/download).
 
 ```bash
 git clone https://github.com/royalharry007/SlothWorld.git
@@ -82,112 +86,59 @@ npm run build
 npm start
 ```
 
-Open **http://127.0.0.1:8787**. The sample world works right away, with no model needed.
+Open **http://127.0.0.1:8787** and click **Explore the sample world**. That works straight away, without a model.
 
-**To create worlds from your own PDFs** (and to talk to Pip and Hoot), install [Ollama](https://ollama.com/download), then download Gemma once:
+To create worlds from your own PDFs and talk to Pip and Hoot, download Gemma once:
 
 ```bash
 ollama pull gemma4:e2b-it-qat
 ```
 
-The green dot on the start page shows when the model is ready. Without it, Pip turns into a self-check against the PDF's key sentences, and Hoot shows the most relevant passages instead of answering.
+No GPU? Use the small model on CPU instead:
 
-Tested on Windows 11 with Chrome. Other recent desktop browsers with WebGL should work, but haven't been tested.
+```bash
+ollama pull gemma3:1b
+# then start SlothWorld with:
+SLOTH_MODEL=gemma3:1b SLOTH_NUM_GPU=0 SLOTH_MAX_CONCEPTS=4 npm start
+```
 
-## 2. Use it
-
-**Explore the sample world**
-
-1. Click **Explore the sample world**, then **Start exploring**.
-2. Walk with `W A S D` or the arrow keys, drag to look around, scroll to zoom, or click the ground to walk there. **Walk me there** goes to your next challenge.
-3. Walk up to something glowing and press `E`.
-
-The sample, *How Neural Networks Learn*, is hand-written and labelled as such. Its three islands have working labs, and every number is calculated live:
-
-- **The Neuron:** drag the weights, inputs and bias, and watch z = Σwx + b and sigmoid(z) change.
-- **The Network:** send a signal through a 3→4→2 network and watch it travel.
-- **The Learning Arena:** roll a ball down the real loss curve with gradient descent. A learning rate of 0.14 really does overshoot.
-
-![The neuron lab](docs/screenshots/05-neuron-lab.png)
-
-**Create a world from your PDF**
-
-1. Click **Create a world from a PDF** and drop in a PDF (up to 15 MB; the first 60 pages are used).
-2. Watch the stages: reading the PDF, mapping concepts, designing islands, checking quotes, raising islands.
-3. Explore your new world. Press `J` for the journal (a clickable concept map and the **validation report** of everything that was fixed or flagged) and `M` for the world map.
+(On Windows PowerShell, set them first: `$env:SLOTH_MODEL="gemma3:1b"; $env:SLOTH_NUM_GPU="0"; $env:SLOTH_MAX_CONCEPTS="4"; npm start`.)
 
 No PDF handy? Try `public/samples/the-water-cycle.pdf`.
 
-![Professor Hoot answers from the PDF with a verified quote](docs/screenshots/24-hoot.png)
+**Keys:** `W A S D` walk · drag to look · `E` use · `H` ask Hoot · `J` journal and concept map · `M` world map · `Esc` close.
 
-**Keys:** `E` use · `H` ask Hoot · `J` journal · `M` world map · `Esc` close.
+I tested it on Windows 11 with Chrome. Other recent desktop browsers with WebGL should work, but I haven't tested them.
 
-## 3. Settings
+## Safety and honesty
 
-All settings are optional environment variables:
-
-| Variable | Default | What it does |
-|---|---|---|
-| `SLOTH_MODEL` | `gemma4:e2b-it-qat` | Any Ollama model that supports JSON output |
-| `OLLAMA_URL` | `http://127.0.0.1:11434` | Where Ollama is listening |
-| `SLOTH_MAX_CONCEPTS` | `6` | Islands per world (2–6). Fewer is faster |
-| `SLOTH_NUM_THREAD` / `SLOTH_NUM_GPU` / `SLOTH_NUM_CTX` | Ollama's / – / `8192` | CPU threads, `0` = CPU only, context size |
-| `SLOTH_CALL_TIMEOUT_MS` | `240000` | Time limit per model call |
-| `SLOTH_HOSTED` | off | `1` when running for other people: changes the privacy wording |
-| `SLOTH_RATE_LIMIT_PER_HOUR` / `SLOTH_TUTOR_LIMIT_PER_HOUR` | `0` (unlimited) | New worlds / Pip-and-Hoot questions per visitor per hour |
-| `PORT` / `HOST` | `8787` / `127.0.0.1` | The server only listens on your own computer by default |
-
-## 4. The live demo
-
-The online version uses **Render as its AI runtime**: one container runs the web app, Ollama and **Gemma 3 1B** together, on plain CPUs with no GPU and no outside AI API. The same open model that runs on a laptop powers the hosted game too.
-
-- **Same game, smaller model.** The sample world is instant. A world from your own PDF takes about 3–6 minutes on the server's CPU (versus about a minute with Gemma 4 on a laptop GPU), and the questions are simpler.
-- **Honest about privacy.** Online, the app says your PDF is processed on the SlothWorld server, in memory, not stored, and not sent to any AI company. It only says "never leaves your computer" when you run it yourself.
-- **Fair use.** Each visitor can build 3 worlds and ask Pip and Hoot 40 questions per hour, so everyone gets a turn.
-
-## Safety
-
-- **Nothing is executed.** The PDF is read as text in memory, and no temporary files are written. The model's output is data checked against a strict schema; it can't add code, HTML or new kinds of object.
-- **Every quote is checked** against the text taken from your PDF. The passage you read is always the PDF's own words, never the model's.
-- **Wrong answers are dropped, not hidden.** Quizzes whose answer key disagrees with the source are removed, and the journal's validation report lists every fix.
-- **Honest failures.** Scanned PDFs (no OCR), password-protected files, a missing model and an offline model each give a clear message. The sample world always works.
-- **Local by default.** The server listens only on `127.0.0.1`. Saved worlds and progress stay in your browser.
+- **Nothing from the PDF or the model is executed.** The PDF is read as text in memory, and the model's output is data checked against a strict schema.
+- **The passage you read is always the PDF's own words.** Everything the model writes is labelled as the model's, and every quote shows whether it was *verified*, had its *page corrected*, is only the *closest matching passage*, or was *not found*.
+- **Wrong answers are dropped, not hidden.** The journal's validation report lists everything that was fixed or flagged.
+- **Clear failures.** Scanned PDFs, password-protected files, a missing model and an offline model each get a clear message, and the sample world always works.
 
 ## Known limitations
 
 - **No OCR.** Scanned PDFs are detected and refused, with instructions.
 - **Long PDFs are sampled.** Some detail in long documents is missed.
-- **Small models make mistakes.** Gemma 3 1B (used online) writes simpler questions and can mislabel a claim; the source passage is always shown after you answer.
-- **The hands-on labs exist only in the sample world.** Generated worlds use quizzes, claims, sequences, Word Bridges, Pip and Hoot.
-- **Low-memory computers** can lose the 3D view while the model is running. A **Wake the world up** button reloads it, and your progress is kept.
+- **Smaller models write simpler questions.** Gemma 3 1B can also mislabel a claim; the source passage is always shown after you answer.
+- **The hands-on labs are hand-built** for the sample world. Generated worlds use quizzes, claims, sequences, Word Bridges, Pip and Hoot.
+- **On low-memory computers** the 3D view can drop while the model is busy. A **Wake the world up** button brings it back without losing progress.
 
 ## For developers
 
-**Run in development mode** (live reload):
-
 ```bash
-npm run dev          # app on http://localhost:5173, API on 127.0.0.1:8787
+npm run dev     # live reload: app on http://localhost:5173, API on 127.0.0.1:8787
+npm test        # 35 unit tests: math, quote checks, repairs, layout, Pip and Hoot guards
+npm run e2e     # 21 end-to-end checks that play the game in Chrome (needs npm run dev)
+npx tsx scripts/try-generate.ts public/samples/the-water-cycle.pdf world.json   # PDF → world on the command line
 ```
 
-**Run the tests:**
+The end-to-end run plays the game the way a learner would. It checks the labs' numbers against the math, walks between islands, teaches Pip and asks Hoot with the real model, uploads real, fake, scanned and empty files, and builds a world from a real PDF. Results are in [docs/TEST_RESULTS.md](docs/TEST_RESULTS.md).
 
-```bash
-npm test             # 35 unit tests: math, quote checks, repairs, layout, Pip and Hoot guards
-npm run e2e          # 21 end-to-end checks in Chrome against the running app (needs npm run dev)
-npm run e2e -- http://127.0.0.1:8787 --skip-ai   # against the production build, without generation
-```
+**Settings** are environment variables: `SLOTH_MODEL`, `OLLAMA_URL`, `SLOTH_MAX_CONCEPTS` (2–6 islands), `SLOTH_NUM_GPU`, `SLOTH_NUM_THREAD`, `SLOTH_NUM_CTX`, `SLOTH_CALL_TIMEOUT_MS`, and `PORT`/`HOST`. The server only listens on your own computer by default.
 
-The end-to-end run plays the game the way a learner would. It checks every lab's numbers against the math, walks the sloth between islands, teaches Pip and asks Hoot with the real model, uploads real, fake, scanned and empty files, and generates a world from a real PDF. Results are in [docs/TEST_RESULTS.md](docs/TEST_RESULTS.md).
-
-**Deploy your own copy on Render:** `render.yaml` and the `Dockerfile` set everything up. In Render choose **New → Blueprint** and pick your fork. [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md) covers every step, the costs, and how to suspend the service afterwards.
-
-**Generate a world from the command line:**
-
-```bash
-npx tsx scripts/try-generate.ts public/samples/the-water-cycle.pdf world.json
-```
-
-**How the code is organised:**
+**Self-hosting** for other people is optional: a `Dockerfile` bundles SlothWorld, Ollama and Gemma 3 1B for CPU servers, with per-visitor rate limits and honest "processed on the server" privacy wording. See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md).
 
 ```
 shared/      world blueprint schema, quote checking, repairs, layout, math, sample world
@@ -199,11 +150,11 @@ tests/ e2e/  unit and end-to-end tests
 
 ## License and credits
 
-SlothWorld is created by Harichand and released under the [MIT License](LICENSE).
+SlothWorld is made by Harichand and released under the [MIT License](LICENSE).
 
-It builds on:
-
-- **Gemma** by Google (Gemma 4 E2B, reported by Ollama as Apache 2.0; Gemma 3 1B under the Gemma Terms of Use), run locally with [Ollama](https://ollama.com). The models are downloaded on your computer, not included here.
+- **Gemma** by Google (Gemma 4 E2B, reported by Ollama as Apache 2.0; Gemma 3 1B under the Gemma Terms of Use), run locally with [Ollama](https://ollama.com). The models download to your computer and aren't included here.
 - [React](https://react.dev), [three.js](https://threejs.org), [React Three Fiber](https://github.com/pmndrs/react-three-fiber) and drei, [pdf.js](https://mozilla.github.io/pdf.js/), [Zod](https://zod.dev), [Zustand](https://github.com/pmndrs/zustand), Express and Vite.
 - Fonts: Fredoka and Inter (SIL Open Font License).
-- Low-poly trees, bushes, rocks and clouds come from my earlier asset library. The islands, labs, characters and the sloth are generated in code.
+- The low-poly trees, bushes, rocks and clouds come from my earlier asset library. The islands, labs, characters and the sloth are generated in code.
+
+Stop rereading. Let the sloth do the chores. 🦥
