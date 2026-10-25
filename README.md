@@ -4,7 +4,7 @@
 
 A 3D web game that turns a dense PDF into small islands you walk around, experiment on, and teach your way through, powered by Google's open Gemma models. Play it online, or run it entirely on your own laptop.
 
-Created by Harichand for **Hacktoberfest 2026 · Week 3**. Entered in the **Gemma partner category**.
+Created by Harichand for the **Hacktoberfest 2026 Open-Source AI Challenge, Week 3: *Slow and Steady***. Built with **Gemma**, which runs locally on a laptop, and **Render**, which runs Gemma as the online demo's AI runtime.
 
 > **Try it now**
 >
@@ -24,14 +24,21 @@ Created by Harichand for **Hacktoberfest 2026 · Week 3**. Entered in the **Gemm
 - **Slow and steady.** No timers, no streaks, no penalty for a wrong answer. Your progress is saved, and islands bloom with flowers as you learn.
 - **Private.** No account needed. Run it yourself and your PDF never leaves your computer.
 
-## The theme: slow and steady
+## The lazy payoff
 
-Studying a dense PDF is slow. SlothWorld doesn't pretend otherwise. It makes the slow part (actually understanding) feel calm and playful, and does the tedious part (turning pages into practice) for you.
+Studying properly from a dense PDF means doing a pile of chores first: reading it all, picking out the key ideas, writing notes, making flashcards and practice questions, and remembering to revise. Most of us skip the chores and just reread, which is the least effective option.
 
-- **No rush.** Nothing is timed, there are no streaks to protect, and a wrong answer just means "look again".
-- **One island at a time.** Prerequisites come first, so you build understanding step by step.
-- **Come back tomorrow.** The Review Grove spaces your practice over days, because a few minutes now and then beats one long cram.
-- **The effort it saves:** a 4-page PDF becomes a world with about a dozen challenges in about a minute.
+**SlothWorld does the chores for you.** Drop in a PDF and a sloth turns it into a small world in about a minute:
+
+| The chore you'd normally do | What SlothWorld does instead |
+|---|---|
+| Pick out the key ideas and how they connect | Maps 4–6 concepts in learning order, each with its page and quote |
+| Write practice questions and flashcards | Builds quizzes, true-or-false claims, fill-in sentences and sequencing puzzles for every idea |
+| Check your answers against the text | Checks every quote and answer key against your PDF |
+| Find someone to explain it to | Pip waits on every island to be taught |
+| Remember to revise | The Review Grove brings challenges back in 10 minutes, then 1, 3, 7 and 21 days |
+
+Then you get to be slow: nothing is timed, there are no streaks, and a wrong answer just means "look again". A sloth would approve.
 
 ## Why it's built this way
 
@@ -39,7 +46,7 @@ Rereading, highlighting and summarising are rated among the *least* useful ways 
 
 So SlothWorld doesn't summarise your PDF for you. It turns it into things to *do*: teach, answer, recall later.
 
-## Partner technology: Gemma
+## Gemma at the core
 
 SlothWorld uses Google's **Gemma** open models, running locally through [Ollama](https://ollama.com). Gemma is used for a few narrow jobs. It never writes code or HTML, and plain code checks everything it says against your PDF before you see it.
 
@@ -132,7 +139,7 @@ All settings are optional environment variables:
 
 ## 4. The live demo
 
-The online version runs on **Render** in a single container: SlothWorld, Ollama and **Gemma 3 1B**, on plain CPUs with no GPU. That shows an open model can power the whole experience on modest hardware.
+The online version uses **Render as its AI runtime**: one container runs the web app, Ollama and **Gemma 3 1B** together, on plain CPUs with no GPU and no outside AI API. The same open model that runs on a laptop powers the hosted game too.
 
 - **Same game, smaller model.** The sample world is instant. A world from your own PDF takes about 3–6 minutes on the server's CPU (versus about a minute with Gemma 4 on a laptop GPU), and the questions are simpler.
 - **Honest about privacy.** Online, the app says your PDF is processed on the SlothWorld server, in memory, not stored, and not sent to any AI company. It only says "never leaves your computer" when you run it yourself.
