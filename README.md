@@ -2,9 +2,17 @@
 
 **Stop rereading. Start exploring.**
 
-A 3D web game that turns a dense PDF into small islands you walk around, experiment on, and teach your way through. It runs on your own computer, using an open model.
+A 3D web game that turns a dense PDF into small islands you walk around, experiment on, and teach your way through, powered by Google's open Gemma models. Play it online, or run it entirely on your own laptop.
 
-Created by Harichand.
+Created by Harichand for **Hacktoberfest 2026 · Week 3**. Entered in the **Gemma partner category**.
+
+> **Try it now**
+>
+> 🌐 **Play online:** <!-- REPLACE with your Render URL --> *link coming soon* (the hosted demo runs Gemma 3 1B on Render)
+>
+> 🎬 **Watch the 3-minute demo:** <!-- REPLACE with your video link --> *coming soon*
+>
+> 💻 **Run it on your laptop in 2 minutes:** see [Install](#1-install)
 
 ![Teaching Pip: Pip gets 1 of 3 key ideas from a half-explanation, asks a nudging question, then understands after the full explanation](docs/screenshots/23-teach-pip.png)
 
@@ -14,7 +22,16 @@ Created by Harichand.
 - **Practise.** Riddle Stones (quizzes), Scales of Truth (is this claim supported?), Sequence Steps (put a process in order) and Word Bridges (put the key words back into a real sentence from your PDF).
 - **Remember.** What you solve comes back in the Review Grove after 10 minutes, then 1, 3, 7 and 21 days. A miss starts that item over.
 - **Slow and steady.** No timers, no streaks, no penalty for a wrong answer. Your progress is saved, and islands bloom with flowers as you learn.
-- **Private.** Your PDF is read on your own computer. No account, no upload.
+- **Private.** No account needed. Run it yourself and your PDF never leaves your computer.
+
+## The theme: slow and steady
+
+Studying a dense PDF is slow. SlothWorld doesn't pretend otherwise. It makes the slow part (actually understanding) feel calm and playful, and does the tedious part (turning pages into practice) for you.
+
+- **No rush.** Nothing is timed, there are no streaks to protect, and a wrong answer just means "look again".
+- **One island at a time.** Prerequisites come first, so you build understanding step by step.
+- **Come back tomorrow.** The Review Grove spaces your practice over days, because a few minutes now and then beats one long cram.
+- **The effort it saves:** a 4-page PDF becomes a world with about a dozen challenges in about a minute.
 
 ## Why it's built this way
 
@@ -113,11 +130,13 @@ All settings are optional environment variables:
 | `SLOTH_RATE_LIMIT_PER_HOUR` / `SLOTH_TUTOR_LIMIT_PER_HOUR` | `0` (unlimited) | New worlds / Pip-and-Hoot questions per visitor per hour |
 | `PORT` / `HOST` | `8787` / `127.0.0.1` | The server only listens on your own computer by default |
 
-## 4. Put it online (Render)
+## 4. The live demo
 
-`render.yaml` and the `Dockerfile` run SlothWorld, Ollama and Gemma 3 1B together in one container on CPU, with rate limits so visitors can't run up your bill. In Render: **New → Blueprint → choose this repo**. See [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md) for every step, the costs, and how to suspend it afterwards.
+The online version runs on **Render** in a single container: SlothWorld, Ollama and **Gemma 3 1B**, on plain CPUs with no GPU. That shows an open model can power the whole experience on modest hardware.
 
-When hosted, the app says that PDFs are processed on the server (in memory, not stored, and not sent to any AI company), instead of "never leaves your computer".
+- **Same game, smaller model.** The sample world is instant. A world from your own PDF takes about 3–6 minutes on the server's CPU (versus about a minute with Gemma 4 on a laptop GPU), and the questions are simpler.
+- **Honest about privacy.** Online, the app says your PDF is processed on the SlothWorld server, in memory, not stored, and not sent to any AI company. It only says "never leaves your computer" when you run it yourself.
+- **Fair use.** Each visitor can build 3 worlds and ask Pip and Hoot 40 questions per hour, so everyone gets a turn.
 
 ## Safety
 
@@ -152,6 +171,8 @@ npm run e2e -- http://127.0.0.1:8787 --skip-ai   # against the production build,
 ```
 
 The end-to-end run plays the game the way a learner would. It checks every lab's numbers against the math, walks the sloth between islands, teaches Pip and asks Hoot with the real model, uploads real, fake, scanned and empty files, and generates a world from a real PDF. Results are in [docs/TEST_RESULTS.md](docs/TEST_RESULTS.md).
+
+**Deploy your own copy on Render:** `render.yaml` and the `Dockerfile` set everything up. In Render choose **New → Blueprint** and pick your fork. [docs/DEPLOY_RENDER.md](docs/DEPLOY_RENDER.md) covers every step, the costs, and how to suspend the service afterwards.
 
 **Generate a world from the command line:**
 
