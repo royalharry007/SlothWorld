@@ -4,3 +4,4 @@ dist
 !docs/*.log
 .env
 tsconfig.tsbuildinfo
+recording/
